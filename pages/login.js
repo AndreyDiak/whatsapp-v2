@@ -45,7 +45,4 @@ const Logo = styled.img`
   width: 200px;
 `;
 
-
-
-
 export default LoginPage;
