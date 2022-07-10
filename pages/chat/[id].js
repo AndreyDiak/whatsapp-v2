@@ -14,9 +14,9 @@ function ChatPage ({ chat, messages }) {
   const [user] = useAuthState(auth);
 
   // console.log('chat')
-  // console.log(chat)
+  console.log(chat)
   // console.log('messages')
-  // console.log(JSON.parse(messages))
+  console.log(JSON.parse(messages))
 
   return <Container>
     <Head>
