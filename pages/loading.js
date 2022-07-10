@@ -1,5 +1,5 @@
 import LoopIcon from '@mui/icons-material/Loop';
-function Loading ()  {
+function Loading () {
   return <center>
     <div style={{display: "grid", placeItems: "center", height: '100vh'}}>
       <div style={{display: "flex", flexDirection: "column", alignItems: "center"}}>
