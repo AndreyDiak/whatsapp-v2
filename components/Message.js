@@ -12,7 +12,7 @@ export const Message = ({ user, message, timestamp }) => {
     <TypeOfMessage>
       {message}
       <Timestamp>
-        {timestamp ? moment(message.timestamp).format('LT') : '...' }
+        {timestamp ? moment(timestamp).format('LT') : '...' }
       </Timestamp>
     </TypeOfMessage>
   </Container>
@@ -32,8 +32,7 @@ const MessageElement = styled.p`
   text-align: right;
   @media (max-width: 768px) {
     padding: 7px;
-    margin: 5px;
-    margin-bottom: 20px;
+    margin: 5px 5px 20px 5px;
     font-size: 12px;
   }
 `;

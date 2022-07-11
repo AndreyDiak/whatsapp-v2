@@ -46,7 +46,7 @@ export async function getServerSideProps(context) {
   const messagesRef = collection(db, `chats/${context.query.id}/messages`)
   const chatRef = doc(db, 'chats', `${context.query.id}`)
 
-  const messagesSnap = await getDocs(messagesRef)
+  const messagesSnap = await getDocs(query(messagesRef, orderBy("timestamp", "asc")))
   const chatSnap = await getDoc(chatRef)
 
   const messages = messagesSnap.docs.map(message => ({

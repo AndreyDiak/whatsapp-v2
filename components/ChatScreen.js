@@ -5,7 +5,7 @@ import {useRouter} from "next/router";
 import {Avatar, IconButton} from "@mui/material";
 import {AttachFile, InsertEmoticon, Mic, MoreVert} from "@mui/icons-material";
 import {useCollection,} from "react-firebase-hooks/firestore";
-import {addDoc, collection, doc, getDoc, query, serverTimestamp, updateDoc, where} from "firebase/firestore";
+import {addDoc, collection, doc, getDoc, orderBy, query, serverTimestamp, updateDoc, where} from "firebase/firestore";
 import {Message} from "./Message";
 import {useRef, useState} from "react";
 import {getRecipientEmail} from "../utils/getRecipientEmail";
@@ -18,7 +18,7 @@ export const ChatScreen = ({ messages, chat }) => {
   const router = useRouter();
   const endOfMessagesRef = useRef(null)
   const messagesRef = collection(db, `chats/${router.query.id}/messages`,)
-  const [messagesSnapshot] = useCollection(messagesRef)
+  const [messagesSnapshot] = useCollection(query(messagesRef, orderBy("timestamp", "asc")))
   const [recipientSnapshot] = useCollection(
     query(
       collection(
