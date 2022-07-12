@@ -85,8 +85,7 @@ const Container = styled.div`
     display: none;
   }
   @media (max-width: 768px) {
-    min-width: 60px;
-    max-width: 80px;
+    width: 100%;
   }
 `;
 
@@ -130,7 +129,7 @@ const SidebarButton = styled(Button)`
   width: 100%;
   p {
     @media (max-width: 768px) {
-      display: none;
+      //display: none;
     }
   }
     
@@ -144,6 +143,6 @@ const SidebarButton = styled(Button)`
 
 const SidebarButtonIcon = styled(PersonSearchIcon)`
   @media (min-width: 768px) {
-    display: none;
+    //display: none;
   }
 `

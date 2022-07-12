@@ -10,6 +10,7 @@ import {Message} from "./Message";
 import {useRef, useState} from "react";
 import {getRecipientEmail} from "../utils/getRecipientEmail";
 import {TimeAgo} from "./TimeAgo";
+import ArrowBackIosNewIcon from '@mui/icons-material/ArrowBackIosNew';
 
 export const ChatScreen = ({ messages, chat }) => {
 
@@ -52,6 +53,10 @@ export const ChatScreen = ({ messages, chat }) => {
     scrollToBottom()
   }
 
+  const backToChats = () => {
+    router.push('/');
+  }
+
   const showMessages = () => {
     if( messagesSnapshot) {
       return messagesSnapshot.docs.map(
@@ -81,6 +86,9 @@ export const ChatScreen = ({ messages, chat }) => {
 
   return <Container>
     <Header>
+      <IconButton>
+        <BackIcon onClick={backToChats}/>
+      </IconButton>
       {recipient
         ? (
           <Avatar src={recipient?.photoURL}/>
@@ -131,6 +139,12 @@ const Container = styled.div`
   
 `;
 
+const BackIcon = styled(ArrowBackIosNewIcon)`
+  @media (min-width: 769px) {
+    display: none;
+  }
+`
+
 const Input = styled.input`
   padding: 10px;
   min-height: 50px;
@@ -158,6 +172,7 @@ const Header = styled.div`
   background-color: white;
   z-index: 100;
   top: 0;
+  
 `;
 
 const HeaderInformation = styled.div`
@@ -170,10 +185,20 @@ const HeaderInformation = styled.div`
     font-size: 14px;
     color: gray;
   }
+  @media (max-width: 768px) {
+    h3 {
+      font-size: 14px;
+    }
+    p {
+      margin: 2px 0;
+    }
+  }
 `;
 
 const HeaderIcons = styled.div`
-
+  @media (max-width: 768px) {
+    display: none;
+  }
 `;
 
 const MessagesContainer = styled.div`

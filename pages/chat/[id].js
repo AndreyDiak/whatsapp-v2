@@ -22,7 +22,9 @@ function ChatPage ({ chat, messages }) {
     <Head>
       <title>Chat with {getRecipientEmail(chat.users, user)}</title>
     </Head>
-    <Sidebar />
+    <Responsive>
+      <Sidebar/>
+    </Responsive>
     <ChatContainer>
       <ChatScreen messages={messages} chat={chat}/>
     </ChatContainer>
@@ -38,7 +40,11 @@ const ChatContainer = styled.div`
   overflow: scroll;
   height: 100vh;
 `;
-
+const Responsive = styled.div`
+  @media (max-width: 768px) {
+    display: none;
+  }
+`;
 export default ChatPage;
 
 export async function getServerSideProps(context) {
@@ -58,8 +64,8 @@ export async function getServerSideProps(context) {
     ...chatSnap.data()
   }
 
-  console.log(JSON.stringify(messages))
-  console.log(chat)
+  // console.log(JSON.stringify(messages))
+  // console.log(chat)
 
   return {
     props: {

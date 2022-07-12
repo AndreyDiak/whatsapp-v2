@@ -3,12 +3,11 @@ import {Avatar} from "@mui/material";
 import {getRecipientEmail} from "../utils/getRecipientEmail";
 import {useAuthState} from "react-firebase-hooks/auth";
 import {auth, db} from "../firebase";
-import {collection, query, where} from "firebase/firestore";
-import {useCollection} from "react-firebase-hooks/firestore";
+import {collection, doc, getDocs, orderBy, query, where} from "firebase/firestore";
+import {useCollection, useDocument} from "react-firebase-hooks/firestore";
 import {useRouter} from "next/router";
 
 export const Chat = ({ id, users}) => {
-
 
   const router = useRouter()
   const [user] = useAuthState(auth);
@@ -18,6 +17,16 @@ export const Chat = ({ id, users}) => {
     collection(db, 'users'),
     where('email', '==', recipientEmail)
   )
+  const msgRef = query(
+    collection(db, `/chats/${id}/messages`),
+    orderBy('timestamp', 'asc')
+  )
+  const [msgSnap] = useCollection(msgRef)
+  const messages = msgSnap?.docs.map(message => ({
+    id: message.id,
+    ...message.data()
+  }))
+  console.log(messages)
   // creating the collection...
   const [recipientSnapshot] = useCollection(recipientRef)
   // get user from collection...
@@ -29,13 +38,16 @@ export const Chat = ({ id, users}) => {
 
   return <Container onClick={enterChat}>
     {recipient ? (
-        <UserAvatar src={recipient?.photoURL}/>
+        <UserAvatar src={recipient.data().photoURL}/>
       ) : (
         <UserAvatar>{recipientEmail[0]}</UserAvatar>
           )}
-    <UserEmail>
-      {recipientEmail}
-    </UserEmail>
+    <UserInfo>
+      <p>{recipientEmail}</p>
+      <LastMessage>
+        {messages ? <i>{messages[messages.length - 1].message}</i> : <i>Loading...</i>}
+      </LastMessage>
+    </UserInfo>
     </Container>
 }
 
@@ -48,15 +60,24 @@ const Container = styled.div`
   :hover {
     background-color: #e9eaeb;
   }
+  
 `;
+
+const LastMessage = styled.div`
+  color: gray;
+`
 
 const UserAvatar = styled(Avatar)`
   margin: 5px;
 `;
-const UserEmail = styled.p`
-  @media (max-width: 768px) {
-    display: none;
+
+const UserInfo = styled.div`
+  margin-left: 10px;
+  p {
+    margin: 0 auto;
+    font-weight: 500;
   }
+  
 `
 
 
